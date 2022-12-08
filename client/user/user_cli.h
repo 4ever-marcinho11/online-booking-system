@@ -28,7 +28,9 @@ private:
     train_controller tc;
     order_controller oc;
 public:
-    void base_page();
+    void user_page();
+
+    void auth_page();
 
     void welcome_page();
 
@@ -46,7 +48,15 @@ public:
 
     void logout();
 
-    void error_page(int flag);
+    void error_page(int flag, int sec);
+
+    void revenue();
+    void add_train();
+    void update_train();
+    void update_stations();
+    void remove_train();
+
+
 
 private:
     void sleep(int seconds);

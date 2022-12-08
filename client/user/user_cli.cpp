@@ -19,7 +19,7 @@ void user_cli::welcome_page() {
     } else if (in == "exit") {
         return;
     } else {
-        error_page(0);
+        error_page(0, 2);
     }
 }
 
@@ -35,7 +35,10 @@ void user_cli::register_page() {
     cin >> sex;
     cout << "请输入年龄：";
     cin >> age;
-    r = uc._register(name, id, sex, phone, age);
+
+    // 默认注册用户均为非管理员
+    string default_mode = "0";
+    r = uc._register(name, id, sex, phone, age, default_mode);
     if (r.getCode() == 1) {
         cout << "注册成功，请进行登录" << endl;
         login_page();
@@ -53,18 +56,29 @@ void user_cli::login_page() {
     cin >> id;
 
     r = uc._login(id, name);
+    string user_str = r.getMsg();
+    user *usr = user::from_string(user_str);
+    int is_auth = usr->getIsAuth();
+
     if (r.getCode() == 1) {
         cout << "登录成功" << endl;
         // 缓存用户身份信息
         id_buf = r.getMsg();
-        base_page();
+
+        if (is_auth == 0) {
+            delete usr;
+            user_page();
+        } else {
+            delete usr;
+            auth_page();
+        }
     } else {
         cout << "登录失败" << endl;
         welcome_page();
     }
 }
 
-void user_cli::base_page() {
+void user_cli::user_page() {
     cout << endl;
     string user_str = um.select_one(id_buf);
     if (user_str.empty()) {
@@ -103,7 +117,7 @@ void user_cli::base_page() {
             logout();
             break;
         default:
-            error_page(1);
+            error_page(1, 3);
             break;
     }
 }
@@ -131,7 +145,7 @@ void user_cli::search_trains() {
         }
     }
 
-    base_page();
+    user_page();
 }
 
 void user_cli::create_order() {
@@ -150,7 +164,7 @@ void user_cli::create_order() {
     r = oc._create(id_buf, train_id, from, to, ticket_nums);
     cout << r.getMsg() << endl;
 
-    base_page();
+    user_page();
 }
 
 void user_cli::view_orders() {
@@ -159,7 +173,7 @@ void user_cli::view_orders() {
         cout << a << endl;
     }
 
-    base_page();
+    user_page();
 }
 
 void user_cli::remove_order() {
@@ -173,26 +187,94 @@ void user_cli::remove_order() {
         r = oc._remove(id_buf, in);
         cout << r.getMsg() << endl;
     }
-    base_page();
+    user_page();
 }
 
 void user_cli::logout() {
     r = uc._logout(id_buf);
     if (r.getCode() == 0) {
-        base_page();
+        user_page();
     } else {
         welcome_page();
     }
 }
 
-void user_cli::error_page(int flag) {
+void user_cli::error_page(int flag, int sec) {
     cout << "\n输入有误，正在重定向至主页..." << endl;
-    sleep(3);
-    flag == 0 ? welcome_page() : base_page();
+    sleep(sec);
+    flag == 0 ? welcome_page() : user_page();
 }
 
 void user_cli::sleep(int seconds) {
     clock_t delay = seconds * CLOCKS_PER_SEC;
     clock_t start = clock();
     while (clock() - start < delay);
+}
+
+void user_cli::auth_page() {
+    cout << endl;
+    string auth_str = um.select_one(id_buf);
+    if (auth_str.empty()) {
+        cout << "管理员信息有误" << endl;
+    }
+    stringstream ss(auth_str);
+    string name;
+    ss >> name >> name;
+    cout << "管理员：" << name << "，您好！" << endl;
+
+    cout << "-------------------" << endl;
+    cout << " * 查看当前收益(r)" << endl;
+    cout << " * 新增一列列车(a)" << endl;
+    cout << " * 更新列车站点信息(t)" << endl;
+    cout << " * 更新列车站点信息(s)" << endl;
+    cout << " * 删除列车信息(d)" << endl;
+    cout << " * 退出本次登录(o)" << endl;
+    cout << "-------------------" << endl;
+
+    char in;
+    cout << "请输入您的操作：";
+    cin >> in;
+    switch (in) {
+        case 'r':
+            revenue();
+            break;
+        case 'a':
+            add_train();
+            break;
+        case 't':
+            update_train();
+            break;
+        case 's':
+            update_stations();
+            break;
+        case 'd':
+            remove_train();
+            break;
+        case 'o':
+            logout();
+            break;
+        default:
+            error_page(1, 3);
+            break;
+    }
+}
+
+void user_cli::revenue() {
+
+}
+
+void user_cli::add_train() {
+
+}
+
+void user_cli::update_train() {
+
+}
+
+void user_cli::update_stations() {
+
+}
+
+void user_cli::remove_train() {
+
 }

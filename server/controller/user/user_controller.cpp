@@ -4,8 +4,8 @@
 
 #include "user_controller.h"
 
-result user_controller::_register(string &name, string &id, string &sex, string &phone, string &age) {
-    return us.usr_register(name, id, sex, phone, age);
+result user_controller::_register(string &name, string &id, string &sex, string &phone, string &age, string &is_auth) {
+    return us.usr_register(name, id, sex, phone, age, is_auth);
 }
 
 result user_controller::_login(string &id, string &name) {

@@ -4,7 +4,7 @@
 
 #include "user_service.h"
 
-result user_service::usr_register(string &name, string &id, string &sex, string &phone, string &age) {
+result user_service::usr_register(string &name, string &id, string &sex, string &phone, string &age, string& is_auth) {
     if (name.empty()) {
         return {0, "用户名为空"};
     }
@@ -21,7 +21,7 @@ result user_service::usr_register(string &name, string &id, string &sex, string 
         return {0, "年龄为空"};
     }
 
-    user usr(id, name, sex, phone, std::stoi(age));
+    user usr(id, name, sex, phone, std::stoi(age), std::stoi(is_auth));
     um.insert_one(usr);
     return {1, "注册成功"};
 }
@@ -45,7 +45,9 @@ result user_service::usr_login(string &name, string &id) {
     ofs << id << "," << name << endl;
     ofs.close();
 
-    return {1, id};
+    string user_str = um.select_one(id);
+
+    return {1, user_str};
 }
 
 result user_service::usr_logout(string &id) {

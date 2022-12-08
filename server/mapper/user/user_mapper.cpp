@@ -14,7 +14,7 @@ user_mapper::user_mapper() {
     if (!ifs.good() || line.empty()) {
         // 新建文件，写入表头
         ofstream ofs(user_source, ios::out | ios::app);
-        ofs << "id,name,age,sex,phone" << endl;
+        ofs << "id,name,age,sex,phone,is_auth" << endl;
         ofs.close();
     }
     ifs.close();

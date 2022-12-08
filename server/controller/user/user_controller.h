@@ -12,7 +12,7 @@ private:
     user_service us;
 
 public:
-    result _register(string &name, string &id, string &sex, string &phone, string &age);
+    result _register(string &name, string &id, string &sex, string &phone, string &age, string& is_auth);
     result _login(string &id, string &name);
 
     result _logout(string &id);

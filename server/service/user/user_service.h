@@ -20,7 +20,7 @@ private:
     user_mapper um;
 
 public:
-    result usr_register(string &name, string &id, string &sex, string &phone, string &age);
+    result usr_register(string &name, string &id, string &sex, string &phone, string &age, string& is_auth);
 
     result usr_login(string &name, string &id);
 

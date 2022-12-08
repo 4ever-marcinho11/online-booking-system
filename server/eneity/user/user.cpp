@@ -46,16 +46,27 @@ void user::setAge(int age) {
     age_ = age;
 }
 
-user::user(string id, string name, string sex, string phone, int age) : id_(std::move(id)),
-                                                                        name_(std::move(name)),
-                                                                        sex_(std::move(sex)),
-                                                                        phone_(std::move(phone)),
-                                                                        age_(age) {}
+int user::getIsAuth() const {
+    return is_auth_;
+}
+
+void user::setIsAuth(int isAuth) {
+    is_auth_ = isAuth;
+}
+
+user::user(string id, string name, string sex, string phone, int age, int is_auth)
+        : id_(std::move(id)),
+          name_(std::move(name)),
+          sex_(std::move(sex)),
+          phone_(std::move(phone)),
+          age_(age),
+          is_auth_(is_auth) {}
 
 std::ostream &operator<<(std::ostream &os, const user &user) {
-    os << "user: " << user.id_ <<
-       "\nname: " << user.name_ << ", age: " << user.age_ << ", sex: " << user.sex_
-       << "\nphone: " << user.phone_;
+    os << "user: " << user.id_
+       << "\nname: " << user.name_ << ", age: " << user.age_ << ", sex: " << user.sex_
+       << "\nphone: " << user.phone_
+       << "\nis_auth: " << user.is_auth_;
     return os;
 }
 
@@ -68,8 +79,21 @@ vector<string> user::to_vector() {
     result.push_back(this->phone_);
     using std::to_string;
     result.push_back(to_string(this->age_));
+    result.push_back(to_string(this->is_auth_));
 
     return result;
+}
+
+user *user::from_string(string &line) {
+    stringstream ss(line);
+    string id, name, sex, phone, age, is_auth;
+
+    ss >> id >> name >> sex >> phone >> age >> is_auth;
+    int age_int = stoi(age);
+    int is_auth_int = stoi(is_auth);
+
+    auto* u = new user(id, name, sex, phone, age_int, is_auth_int);
+    return u;
 }
 
 user::~user() = default;

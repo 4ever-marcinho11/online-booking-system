@@ -19,7 +19,6 @@ class order_service {
 private:
     train_service ts;
     train_mapper tm;
-    user_service us;
     order_mapper om;
 public:
     /* 创建订单 */

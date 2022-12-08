@@ -8,9 +8,11 @@
 #include <string>
 #include <vector>
 #include <ostream>
+#include <sstream>
 
 using std::string;
 using std::vector;
+using std::stringstream;
 
 class user {
 private:
@@ -19,6 +21,27 @@ private:
     string sex_;
     string phone_;
     int age_{};
+    // 在version2中添加是否是管理员这一属性
+    int is_auth_{};
+
+public:
+    /* 构造函数 */
+    user(string id, string name, string sex, string phone, int age, int is_auth);
+
+    user();
+
+    /* 析构函数 */
+    virtual ~user();
+
+public:
+    /* 重载流输出运算符 */
+    friend std::ostream &operator<<(std::ostream &os, const user &user);
+
+    /* 功能性代码 */
+    vector<string> to_vector();
+
+    static user *from_string(string &line);
+
 public:
     /* getter & setter */
     const string &getId() const;
@@ -41,19 +64,9 @@ public:
 
     void setAge(int age);
 
-    /* construct */
-    user(string id, string name, string sex, string phone, int age);
+    int getIsAuth() const;
 
-    user();
-
-    /* deconstruct */
-    virtual ~user();
-
-    /* ostream */
-    friend std::ostream &operator<<(std::ostream &os, const user &user);
-
-    /* functional */
-    vector<string> to_vector();
+    void setIsAuth(int isAuth);
 
 };
 
