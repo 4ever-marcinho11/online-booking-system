@@ -82,7 +82,7 @@ void test_get_stations() {
 }
 
 int main() {
-    test_usr_cli();
+   test_usr_cli();
     return 0;
 }
 

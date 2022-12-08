@@ -63,7 +63,7 @@ void user_cli::login_page() {
     if (r.getCode() == 1) {
         cout << "登录成功" << endl;
         // 缓存用户身份信息
-        id_buf = r.getMsg();
+        id_buf = usr->getId();
 
         if (is_auth == 0) {
             delete usr;
@@ -260,21 +260,61 @@ void user_cli::auth_page() {
 }
 
 void user_cli::revenue() {
-
+    cout << endl;
+    r = oc._revenue();
+    cout << "当前系统总收入为：" << r.getLongVal() << " 元" << endl;
+    auth_page();
 }
 
 void user_cli::add_train() {
-
+    cout << "add_train stub" << endl;
+//    cout << endl;
+//
+//    string tid, dep, arr;
+//    int year, month, day, hour, minute, remain;
+//
+//    cout << "请输入列车编号：";
+//    cin >> tid;
+//
+//    cout << "请输入始发站：";
+//    cin >> dep;
+//
+//    cout << "请输入终点站：";
+//    cin >> arr;
+//
+//    cout << "请输入出发年份：";
+//    cin >> year;
+//
+//    cout << "请输入出发月份：";
+//    cin >> month;
+//
+//    cout << "请输入出发日期：";
+//    cin >> day;
+//
+//    cout << "请输入出发时间：";
+//    cin >> hour;
+//
+//    cout << "请输入出发分钟：";
+//    cin >> minute;
+//
+//    string dep_time = time_handler::aggregate(year, month, day, hour, minute, 0);
+//
+//    cout << "请输入持续小时：";
+//    cin >> hour;
+//    cout << "请输入持续小时：";
+//    cin >> hour;
+//
+//    string arr_time = time_handler::aggregate(year, month, day, hour, minute, 0);
 }
 
 void user_cli::update_train() {
-
+    cout << "update_train stub" << endl;
 }
 
 void user_cli::update_stations() {
-
+    cout << "update_stations stub" << endl;
 }
 
 void user_cli::remove_train() {
-
+    cout << "remove_train stub" << endl;
 }

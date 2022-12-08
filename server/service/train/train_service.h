@@ -21,9 +21,12 @@ public:
 
     /* 得到a站到b站的花费 */
     result get_cost(string &train_id, string &at, string &to);
+
+    result add_train(train &t);
+
 private:
     /* 放票策略 */
-    int ticket_strategy(train & tr, string &at, string &to);
+    int ticket_strategy(train &tr, string &at, string &to);
 
 };
 

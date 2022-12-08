@@ -15,3 +15,7 @@ result order_controller::_view(string &id) {
 result order_controller::_remove(string &id, string &train_id) {
     return os.remove_order(id, train_id);
 }
+
+result order_controller::_revenue() {
+    return os.search_total_revenue();
+}

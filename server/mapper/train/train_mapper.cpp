@@ -51,9 +51,8 @@ bool train_mapper::insert_trains(vector<train> &ts) {
 }
 
 bool train_mapper::delete_a_train(string &train_id) {
-    // 读原文件
+    // 列车
     ifstream ifs(train_source, ios::in);
-    // 写新文件
     string temp = "D:/coding/cpp/codes/learning/online-booking-system/data-source/temp.csv";
     ofstream ofs(temp, ios::app);
 
@@ -64,7 +63,7 @@ bool train_mapper::delete_a_train(string &train_id) {
     while (std::getline(ifs, line)) {
         string_handler::change_separator(line);
 
-        // 把表头写入temp
+        // 表头
         stringstream ss(line);
         string s;
         ss >> s;
@@ -74,8 +73,8 @@ bool train_mapper::delete_a_train(string &train_id) {
             continue;
         }
 
+        // 数据
         train *t_ptr = train::from_string(line);
-
         if (*t_ptr != *t) {
             // 将原数据写入temp
             string_handler::recover_separator(line);
@@ -84,16 +83,39 @@ bool train_mapper::delete_a_train(string &train_id) {
 
         delete t_ptr;
     }
-
     delete t;
 
     ifs.close();
     ofs.close();
 
-    // 给新文件改名为原文件的名字
     remove(train_source.c_str());
     if (0 == rename(temp.c_str(), train_source.c_str())) {
-        return true;
+        // 站点
+        ifstream ifs_sta(station_source, ios::in);
+        ofstream ofs_sta(temp, ios::app);
+
+        line.clear();
+        while (std::getline(ifs_sta, line)) {
+            string_handler::change_separator(line);
+
+            stringstream ss(line);
+            string tid;
+            ss >> tid;
+            if (tid != train_id) {
+                string_handler::recover_separator(line);
+                ofs << line << endl;
+            }
+        }
+
+        ifs_sta.close();
+        ofs_sta.close();
+
+        remove(station_source.c_str());
+        if (0 == rename(temp.c_str(), station_source.c_str())) {
+            return true;
+        } else {
+            return false;
+        }
     } else {
         return false;
     }

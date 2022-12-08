@@ -11,3 +11,7 @@ result train_controller::_list(string &from, string &to) {
 result train_controller::_price(string &train_id, string &at, string &to) {
     return ts.get_cost(train_id, at, to);
 }
+
+result train_controller::_add(train &t) {
+    return ts.add_train(t);
+}

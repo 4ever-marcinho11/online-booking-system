@@ -10,6 +10,7 @@
 #include "../../server/controller/user/user_controller.h"
 #include "../../server/controller/train/train_controller.h"
 #include "../../server/controller/order/order_controller.h"
+# include "../../server/utils/time_handler/time_handler.h"
 
 using std::cin;
 using std::unordered_map;
@@ -51,11 +52,14 @@ public:
     void error_page(int flag, int sec);
 
     void revenue();
-    void add_train();
-    void update_train();
-    void update_stations();
-    void remove_train();
 
+    void add_train();
+
+    void update_train();
+
+    void update_stations();
+
+    void remove_train();
 
 
 private:

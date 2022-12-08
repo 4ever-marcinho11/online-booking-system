@@ -45,6 +45,9 @@ public:
 
     /* delete one */
     bool delete_one(order &o);
+
+    /* 管理员接口：查询总体收入信息 */
+    long select_total_revenue();
 };
 
 

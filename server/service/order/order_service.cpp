@@ -84,3 +84,12 @@ result order_service::remove_order(string &id, string &train_id) {
 
     return {1, "删除订单成功"};
 }
+
+result order_service::search_total_revenue() {
+    long long_val = om.select_total_revenue();
+    if (long_val == 0) {
+        long lval = 0;
+        return {0, lval};
+    }
+    return {1, long_val};
+}

@@ -15,6 +15,8 @@ public:
     result _list(string &from, string &to);
 
     result _price(string &train_id, string &at, string &to);
+
+    result _add(train& t);
 };
 
 

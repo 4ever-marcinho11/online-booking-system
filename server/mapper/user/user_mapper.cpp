@@ -20,19 +20,20 @@ user_mapper::user_mapper() {
     ifs.close();
 }
 
-string user_mapper::select_one(string &id_searched) {
+string user_mapper::select_one(string &id) {
     ifstream ifs(user_source, ios::in);
+
     string line;
     while (std::getline(ifs, line)) {
-        line = string_handler::change_separator(line);
+        string_handler::change_separator(line);
 
         stringstream ss(line);
-        string id_stored;
-        ss >> id_stored;
+        string uid;
+        ss >> uid;
 
-        if (id_stored == id_searched) {
+        if (uid == id) {
             string ret_str;
-            ret_str += id_searched + "\t";
+            ret_str += id + "\t";
             string item;
             while (ss >> item) {
                 ret_str += item + "\t";
@@ -42,7 +43,7 @@ string user_mapper::select_one(string &id_searched) {
         }
     }
 
-    string msg = "找不到 " + id_searched + " 的记录";
+    string msg = "找不到 " + id + " 的记录";
     cout << msg << endl;
     ifs.close();
 

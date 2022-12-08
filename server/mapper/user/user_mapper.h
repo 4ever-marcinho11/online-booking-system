@@ -35,7 +35,7 @@ public:
     virtual ~user_mapper();
 
     /* select one */
-    string select_one(string &id_searched);
+    string select_one(string &id);
 
     /* insert one */
     bool insert_one(user &u);

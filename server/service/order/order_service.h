@@ -29,6 +29,9 @@ public:
 
     /* 撤回订单 */
     result remove_order(string &id, string &train_id);
+
+    /* 管理员：查询总收入 */
+    result search_total_revenue();
 };
 
 

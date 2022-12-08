@@ -17,6 +17,8 @@ public:
     result _view(string &id);
 
     result _remove(string &id, string &train_id);
+
+    result _revenue();
 };
 
 

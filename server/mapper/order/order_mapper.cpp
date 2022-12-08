@@ -155,3 +155,35 @@ bool order_mapper::delete_one(order &o) {
     }
 }
 
+long order_mapper::select_total_revenue() {
+    long result = 0;
+
+    ifstream ifs(order_source, ios::in);
+    string line;
+
+    if (!ifs.good()) {
+        cout << "在读取 order.csv 时发生异常" << endl;
+        cout << "请先检查文件路径是否准确" << endl;
+        return 0;
+    }
+
+    std::getline(ifs, line);
+    while (std::getline(ifs, line)) {
+        if (line.empty()) {
+            continue;
+        } else {
+            line = string_handler::change_separator(line);
+            stringstream ss(line);
+            string price;
+            // 循环到total_price
+            while (ss >> price);
+            // 将price转换为long并累加到result中
+            long from_an_order = std::stol(price);
+            result += from_an_order;
+        }
+    }
+
+    ifs.close();
+    return result;
+}
+

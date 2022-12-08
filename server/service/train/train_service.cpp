@@ -56,3 +56,12 @@ result train_service::list_trains_constraint(string &from, string &to) {
 
     return {1, done};
 }
+
+result train_service::add_train(train &t) {
+    bool b = tm.insert_a_train(t);
+    if (!b) {
+        return {0, "新增列车失败"};
+    } else {
+        return {1, "新增列车成功"};
+    }
+}

@@ -24,3 +24,7 @@ int result::getVal() const {
 const vector<string> &result::getVec() const {
     return vec_;
 }
+
+long result::getLongVal() const {
+    return long_val_;
+}
