@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.23)
+project(online_booking_system)
+
+set(CMAKE_CXX_STANDARD 14)
+
+add_executable(online_booking_system main.cpp server/eneity/train/train.cpp server/eneity/train/train.h server/utils/time_handler/time_handler.cpp server/utils/time_handler/time_handler.h server/mapper/train/train_mapper.cpp server/mapper/train/train_mapper.h server/eneity/user/user.cpp server/eneity/user/user.h server/mapper/user/user_mapper.cpp server/mapper/user/user_mapper.h server/utils/string_handler/string_handler.cpp server/utils/string_handler/string_handler.h server/eneity/order/order.cpp server/eneity/order/order.h server/mapper/order/order_mapper.cpp server/mapper/order/order_mapper.h server/service/user/user_service.cpp server/service/user/user_service.h server/eneity/result/result.cpp server/eneity/result/result.h server/service/train/train_service.cpp server/service/train/train_service.h server/service/order/order_service.cpp server/service/order/order_service.h server/controller/user/user_controller.cpp server/controller/user/user_controller.h server/controller/train/train_controller.cpp server/controller/train/train_controller.h server/controller/order/order_controller.cpp server/controller/order/order_controller.h client/user/user_cli.cpp client/user/user_cli.h)
