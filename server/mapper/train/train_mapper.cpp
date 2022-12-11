@@ -28,6 +28,19 @@ bool train_mapper::insert_a_train(train &t) {
     ofs << v[v.size() - 1];
     ofs << endl;
     ofs.close();
+
+
+    // 向stations中添加起始站
+    ofstream ofs_sta(station_source, ios::app);
+    string line;
+    line += t.getId();
+    line += ",";
+    line += t.getSrc();
+    line += ",";
+    line += t.getDst();
+    ofs_sta << line << endl;
+    ofs_sta.close();
+
     return true;
 }
 
@@ -103,7 +116,7 @@ bool train_mapper::delete_a_train(string &train_id) {
             ss >> tid;
             if (tid != train_id) {
                 string_handler::recover_separator(line);
-                ofs << line << endl;
+                ofs_sta << line << endl;
             }
         }
 
