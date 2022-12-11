@@ -79,7 +79,6 @@ void user_cli::login_page() {
 }
 
 void user_cli::user_page() {
-    cout << endl;
     string user_str = um.select_one(id_buf);
     if (user_str.empty()) {
         cout << "用户信息有误" << endl;
@@ -168,6 +167,7 @@ void user_cli::create_order() {
 }
 
 void user_cli::view_orders() {
+    cout << endl;
     r = oc._view(id_buf);
     for (auto &a: r.getVec()) {
         cout << a << endl;
@@ -191,6 +191,7 @@ void user_cli::remove_order() {
 }
 
 void user_cli::logout() {
+    cout << endl;
     r = uc._logout(id_buf);
     if (r.getCode() == 0) {
         user_page();
@@ -314,6 +315,7 @@ void user_cli::add_train() {
 }
 
 void user_cli::remove_train() {
+    cout << endl;
     cout << "所有列车信息如下：" << endl;
     r = tc._see_all();
     if (r.getCode() == 0) {
