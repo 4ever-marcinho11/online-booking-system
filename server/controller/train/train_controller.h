@@ -16,7 +16,11 @@ public:
 
     result _price(string &train_id, string &at, string &to);
 
-    result _add(train& t);
+    result _add(train &t);
+
+    result _see_all();
+
+    result _remove(string &tid);
 };
 
 

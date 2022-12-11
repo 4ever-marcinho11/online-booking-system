@@ -24,6 +24,10 @@ public:
 
     result add_train(train &t);
 
+    result see_all();
+
+    result remove_train(string &tid);
+
 private:
     /* 放票策略 */
     int ticket_strategy(train &tr, string &at, string &to);

@@ -15,3 +15,11 @@ result train_controller::_price(string &train_id, string &at, string &to) {
 result train_controller::_add(train &t) {
     return ts.add_train(t);
 }
+
+result train_controller::_see_all() {
+    return ts.see_all();
+}
+
+result train_controller::_remove(string &tid) {
+    return ts.remove_train(tid);
+}

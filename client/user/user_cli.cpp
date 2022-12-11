@@ -159,7 +159,7 @@ void user_cli::create_order() {
 
     r = tc._price(train_id, from, to);
     int price = r.getVal();
-    cout << "本次花费为：" << price << endl;
+    cout << "本次花费为：" << price * ticket_nums << endl;
 
     r = oc._create(id_buf, train_id, from, to, ticket_nums);
     cout << r.getMsg() << endl;
@@ -202,7 +202,13 @@ void user_cli::logout() {
 void user_cli::error_page(int flag, int sec) {
     cout << "\n输入有误，正在重定向至主页..." << endl;
     sleep(sec);
-    flag == 0 ? welcome_page() : user_page();
+    if (flag == 0) {
+        welcome_page();
+    } else if (flag == 1) {
+        user_page();
+    } else if (flag == 2) {
+        auth_page();
+    }
 }
 
 void user_cli::sleep(int seconds) {
@@ -225,8 +231,6 @@ void user_cli::auth_page() {
     cout << "-------------------" << endl;
     cout << " * 查看当前收益(r)" << endl;
     cout << " * 新增一列列车(a)" << endl;
-    cout << " * 更新列车站点信息(t)" << endl;
-    cout << " * 更新列车站点信息(s)" << endl;
     cout << " * 删除列车信息(d)" << endl;
     cout << " * 退出本次登录(o)" << endl;
     cout << "-------------------" << endl;
@@ -240,12 +244,6 @@ void user_cli::auth_page() {
             break;
         case 'a':
             add_train();
-            break;
-        case 't':
-            update_train();
-            break;
-        case 's':
-            update_stations();
             break;
         case 'd':
             remove_train();
@@ -267,54 +265,83 @@ void user_cli::revenue() {
 }
 
 void user_cli::add_train() {
-    cout << "add_train stub" << endl;
-//    cout << endl;
-//
-//    string tid, dep, arr;
-//    int year, month, day, hour, minute, remain;
-//
-//    cout << "请输入列车编号：";
-//    cin >> tid;
-//
-//    cout << "请输入始发站：";
-//    cin >> dep;
-//
-//    cout << "请输入终点站：";
-//    cin >> arr;
-//
-//    cout << "请输入出发年份：";
-//    cin >> year;
-//
-//    cout << "请输入出发月份：";
-//    cin >> month;
-//
-//    cout << "请输入出发日期：";
-//    cin >> day;
-//
-//    cout << "请输入出发时间：";
-//    cin >> hour;
-//
-//    cout << "请输入出发分钟：";
-//    cin >> minute;
-//
-//    string dep_time = time_handler::aggregate(year, month, day, hour, minute, 0);
-//
-//    cout << "请输入持续小时：";
-//    cin >> hour;
-//    cout << "请输入持续小时：";
-//    cin >> hour;
-//
-//    string arr_time = time_handler::aggregate(year, month, day, hour, minute, 0);
-}
+    cout << endl;
 
-void user_cli::update_train() {
-    cout << "update_train stub" << endl;
-}
+    string tid, dep, arr;
+    int year, month, day, hour, minute, remain;
 
-void user_cli::update_stations() {
-    cout << "update_stations stub" << endl;
+    cout << "请输入列车编号：";
+    cin >> tid;
+
+    cout << "请输入始发站：";
+    cin >> dep;
+
+    cout << "请输入终点站：";
+    cin >> arr;
+
+    cout << "请输入出发年份：";
+    cin >> year;
+
+    cout << "请输入出发月份：";
+    cin >> month;
+
+    cout << "请输入出发日期：";
+    cin >> day;
+
+    cout << "请输入出发时间：";
+    cin >> hour;
+
+    cout << "请输入出发分钟：";
+    cin >> minute;
+
+    string dep_time = time_handler::aggregate(year, month, day, hour, minute, 0);
+
+    cout << "请输入持续小时：";
+    cin >> hour;
+    cout << "请输入持续分钟：";
+    cin >> minute;
+
+    string arr_time = time_handler::aggregate(year, month, day, hour, minute, 0);
+
+    cout << "请输入空余座位上限：";
+    cin >> remain;
+
+    train tr(tid, dep, arr, dep_time, arr_time, remain);
+    r = tc._add(tr);
+    cout << r.getMsg();
+
+    auth_page();
 }
 
 void user_cli::remove_train() {
-    cout << "remove_train stub" << endl;
+    cout << "所有列车信息如下：" << endl;
+    r = tc._see_all();
+    if (r.getCode() == 0) {
+        cout << r.getMsg() << endl;
+    } else {
+        vector<string> res = r.getVec();
+        for (auto &a: res) {
+            cout << a << endl;
+        }
+    }
+
+    string flag;
+    cout << "请输入是否需要删除指定列车信息(y/n)：";
+    cin >> flag;
+
+    if (flag == "y" | flag == "Y") {
+        string tid;
+        cout << "请输入列车编号：";
+        cin >> tid;
+
+        r = tc._remove(tid);
+        cout << r.getMsg() << endl;
+        auth_page();
+    } else if (flag == "n" | flag == "N") {
+        cout << "没有修改任何信息" << endl;
+        auth_page();
+    } else {
+        cout << "输入有误" << endl;
+        error_page(2, 3);
+    }
 }

@@ -65,3 +65,21 @@ result train_service::add_train(train &t) {
         return {1, "新增列车成功"};
     }
 }
+
+result train_service::see_all() {
+    vector<string> vec = tm.select_trains();
+    if (vec.empty()) {
+        return {0, "无法读取列车信息"};
+    }
+    return {1, vec};
+}
+
+result train_service::remove_train(string &tid) {
+    bool b = tm.delete_a_train(tid);
+    if (b) {
+        return {1, "删除成功"};
+    } else {
+        return {0, "删除失败"};
+    }
+}
+

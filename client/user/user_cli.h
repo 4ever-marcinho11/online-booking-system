@@ -55,10 +55,6 @@ public:
 
     void add_train();
 
-    void update_train();
-
-    void update_stations();
-
     void remove_train();
 
 
